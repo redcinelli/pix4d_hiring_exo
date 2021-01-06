@@ -1,8 +1,7 @@
-from fastapi import APIRouter
+from fastapi import FastAPI
 
 from Rest.DronesAPI import drones_api
 
-app = APIRouter()
-
+app = FastAPI()
 
 app.include_router(drones_api.router)

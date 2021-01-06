@@ -1,6 +1,7 @@
+from functools import wraps
 from fastapi import HTTPException
-
 from DataAccess.UserDataAccess import get_right
+from Domain.Types.AuthorisationError import AuthorisationError
 from Domain.Types.UserRights import UserRights
 from Rest.schema.user_id import UserId
 
@@ -14,9 +15,10 @@ def check_write_access(user_id: UserId):
 
 
 def is_allowed_to_write(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if check_write_access(args[0]):
             func(*args, **kwargs)
         else:
-            raise HTTPException(status_code=403, detail="Not allowed to write")
+            raise AuthorisationError()
     return wrapper

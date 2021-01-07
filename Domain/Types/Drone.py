@@ -9,12 +9,18 @@ from Domain.Types.User import User
 
 
 class SupportedDrones(str, Enum):
+    """
+    Domain layer: Enumeration of drone brand supported by the company
+    """
     sensefly = 'SENSEFLY'
     dji = 'DJI'
     parrot = 'PARROT'
 
 
 class Drone(BaseModel):
+    """
+    Domain layer: drone information
+    """
     id: UUID
     name: str
     serial_number: str

@@ -1,5 +1,4 @@
 from Domain.Types.User import User
-from Domain.Types.UserRights import UserRights
 from Rest.schema.user_id import UserId
 
 db = [
@@ -19,12 +18,22 @@ db = [
 
 
 def get_right(user_id: UserId):
+    """
+    Data Access layer: retrieve for the database user rights
+    :param user_id: Current user
+    :return: rights object
+    """
     for user in db:
         if user['id'] == user_id.id:
             return int(user['right'])
 
 
 def get_user(user_id: UserId):
+    """
+    Data Access layer: retrieve a user if it exists
+    :param user_id: user id
+    :return: User object
+    """
     for user in db:
         if user['id'] == user_id.id:
             return User(**user)

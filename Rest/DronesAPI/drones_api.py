@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException
 from starlette.requests import Request
 
@@ -18,14 +16,25 @@ router = APIRouter(
 
 @router.post("/")
 async def add_new_drone(request: Request, drone: DroneDetails):
+    """
+    REST endpoint to save a new drone to the inventory
+    :param request: Starlette object, contains details about the incoming request
+    :param drone: Details about the drone to save
+    :return: UUID of the new drone saved into the database
+    """
     try:
         user = UserId(id=request.headers['x-fakeauth-x'])
-        register_new_drone(user, drone)
+        return register_new_drone(user, drone)
     except AuthorisationError as e:
         raise HTTPException(status_code=403, detail=e.message)
-    return None
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
 
 @router.get("/")
-def get_drones(brand: Optional[str] = None, camera_brand: Optional[str] = None, name: Optional[str] = None, q: Optional[str] = None):
+def get_drones():
+    """
+    Access the drone available in inventory
+    :return: List of information about available drones
+    """
     return retrieve_drones()

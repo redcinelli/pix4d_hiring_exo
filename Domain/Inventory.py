@@ -15,7 +15,12 @@ drones = []
 
 @is_allowed_to_write
 def register_new_drone(user_id: UserId, drone_info: DroneDetails):
-    """ We need to check for ! user id, drones related information, and save it to the database"""
+    """
+    Domain layer: Save new drone to the database if information checks out
+    :param user_id: User info
+    :param drone_info: drone details
+    :return: drone id
+    """
     drone_id = uuid.uuid4()
 
     drone = Drone(
@@ -37,5 +42,9 @@ def register_new_drone(user_id: UserId, drone_info: DroneDetails):
 
 
 def retrieve_drones():
+    """
+    Domain layer: Get drones available in the inventory
+    :return: list of available drones
+    """
     return read_drone_info()
 
